@@ -2,63 +2,34 @@ import { CREATE_EMPLOYEE, ASSIGN_PROJECT } from './employee/employeeConst'
 import { CREATE_PROJECT, ASSIGN_TASK, DELETE_PROJECT } from './project/projectConst'
 import { CREATE_TASK, DELETE_TASK, RE_ESTIMATE_TASK } from './task/taskConst'
 import orm from './orm'
+import employeeReducer from './employee/employeeReducer'
+import projectReducer from './project/projectReducer'
+import taskReducer from './task/taskReducer'
 
 export default function (state = orm.getEmptyState(), action) {
-  const session = orm.session(state)
-  const Employee = session.Employee
-  const Project = session.Project
-  const Task = session.Task
-
+  let retState
   switch(action.type) {
     //employee
-    case CREATE_EMPLOYEE : {
-      Employee.create(action.value)
-      break
-    }
+    case CREATE_EMPLOYEE :
     case ASSIGN_PROJECT : {
+      retState =  employeeReducer(orm, state, action)
       break
     }
     //project
-    case CREATE_PROJECT : {
-      Project.create(action.value)
-      break
-    }
-    case DELETE_PROJECT : {
-      Project.withId(action.value.idProject).delete()
-      break
-    }
+    case CREATE_PROJECT :
+    case DELETE_PROJECT :
     case ASSIGN_TASK : {
-      let tasks = Project.withId(action.value.idProject).tasks
-      tasks ? tasks.push(action.value.idTask) : Project.withId(action.value.idProject).tasks = [action.value.idTask]
-      //update the task ref
-      tasks = Project.withId(action.value.idProject).tasks
-      if(tasks) {
-        let sumDays = 0
-        tasks.forEach((task) => {
-          sumDays+= Task.withId(task).timeduration
-        })
-        let project = Project.withId(action.value.idProject)
-        Project.withId(action.value.idProject).endDate = project.startDate
-
-
-        Project.withId(action.value.idProject).endDate.setDate(Project.withId(action.value.idProject).endDate.getDate() +  sumDays + project.slackTime)
-      }
+      retState = projectReducer(orm, state, action)
       break
     }
     //task
-    case CREATE_TASK :{
-      Task.create(action.value)
-      break
-    }
-    case DELETE_TASK :{
-      Task.withId(action.value.idTask).delete();
-      break
-    }
+    case CREATE_TASK :
+    case DELETE_TASK :
     case RE_ESTIMATE_TASK :{
-      Task.withId(action.value.idTask).estimation = action.value.estimation
+      retState = taskReducer(orm, state, action)
       break
     }
   }
 
-  return session.state
+  return retState
 }

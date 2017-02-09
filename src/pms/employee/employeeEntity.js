@@ -14,6 +14,7 @@ Employee.fields = {
     id: attr(), // non-relational field for any value; optional but highly recommended
     firstName: attr(),
     lastName: attr(),
+    assignedProjects: attr(),
     supervisorId : fk('Employee')
 };
 
