@@ -15,7 +15,8 @@ Project.fields = {
     name: attr(),
     startDate: attr(),
     slackTime: attr(),
-    endDate: attr()
+    endDate: attr(),
+    tasks : attr()
 };
 
 export default Project

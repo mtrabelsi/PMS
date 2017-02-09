@@ -24,9 +24,20 @@ export default function (state = orm.getEmptyState(), action) {
       break
     }
     case DELETE_PROJECT : {
+      Project.withId(action.value.idProject).delete()
       break
     }
     case ASSIGN_TASK : {
+      let tasks = Project.withId(action.value.idProject).tasks
+      tasks ? tasks.push(action.value.idTask) : Project.withId(action.value.idProject).tasks = [action.value.idTask]
+      if(tasks) {
+        let sumDays = 0
+        tasks.forEach((task) => {
+          sumDays+= Task.withId(task).timeduration
+        })
+        let project = Project.withId(action.value.idProject)
+        Project.withId(action.value.idProject).endDate = project.startDate + sumDays + project.slackTime
+      }
       break
     }
     //task
@@ -35,9 +46,11 @@ export default function (state = orm.getEmptyState(), action) {
       break
     }
     case DELETE_TASK :{
+      Task.withId(action.value.idTask).delete();
       break
     }
     case RE_ESTIMATE_TASK :{
+      Task.withId(action.value.idTask).estimation = action.value.estimation
       break
     }
   }
