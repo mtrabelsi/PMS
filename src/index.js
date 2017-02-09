@@ -2,13 +2,17 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import ActionDispatcher from './actionDispatcher'
 import reducer from './pms/reducer'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import createLogger from 'redux-logger'
+
+
 // possible actions
 import { createProject, assignTask, deleteProject } from './pms/project/projectAction'
 import { createEmployee, assignProject } from './pms/employee/employeeAction'
 import { createTask, deleteTask, reEstimateTask} from './pms/task/taskAction'
 
-let store = createStore(reducer)
+const loggerMiddleware = createLogger()
+let store = createStore(reducer, applyMiddleware(loggerMiddleware))
 
 store.dispatch(createProject('p1', new Date(), 4))
 store.dispatch(createEmployee('marwen','trabelsi', 1))
