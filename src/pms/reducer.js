@@ -31,13 +31,13 @@ export default function (state = orm.getEmptyState(), action) {
     }
     //task
     case CREATE_TASK :{
-      Task.create(action,value)
+      Task.create(action.value)
       break
     }
-    case DELETE_TASK {
+    case DELETE_TASK :{
       break
     }
-    case RE_ESTIMATE_TASK {
+    case RE_ESTIMATE_TASK :{
       break
     }
   }

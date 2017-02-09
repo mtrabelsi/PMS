@@ -6,6 +6,7 @@ import reducer from './pms/reducer'
 import { createStore } from 'redux'
 import { createProject, assignTask, deleteProject } from './pms/project/projectAction'
 import { createEmployee, assignProject } from './pms/employee/employeeAction'
+import { createTask, deleteTask, reEstimateTask} from './pms/task/taskAction'
 
 let store = createStore(reducer)
 
@@ -15,6 +16,8 @@ let unsubscribe = store.subscribe(() =>
 
 store.dispatch(createProject('p1', new Date(), 4))
 store.dispatch(createEmployee('marwen','trabelsi', 1))
+store.dispatch(createTask('task1',2, 'this is new task'))
+
 
 
 console.log(store.getState())

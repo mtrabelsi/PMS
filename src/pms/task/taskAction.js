@@ -12,7 +12,7 @@ export function createTask(name, timeduration, description) {
   }
 }
 
-export function delteTask(idTask) {
+export function deleteTask(idTask) {
   return {
     type : DELETE_TASK,
     value : {idTask}
