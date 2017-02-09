@@ -13,7 +13,8 @@ Employee.modelName = 'Employee';
 Employee.fields = {
     id: attr(), // non-relational field for any value; optional but highly recommended
     firstName: attr(),
-    lastName: attr()
+    lastName: attr(),
+    supervisorId : fk('Employee')
 };
 
 export default Employee

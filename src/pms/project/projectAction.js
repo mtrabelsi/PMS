@@ -11,7 +11,7 @@ export function createProject(name, startDate, timeSlack) {
   }
 }
 
-export function assignProject(idProject, idTask) {
+export function assignTask(idProject, idTask) {
   return {
     type : ASSIGN_TASK,
     value : {
