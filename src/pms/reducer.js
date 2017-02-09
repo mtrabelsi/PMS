@@ -30,13 +30,18 @@ export default function (state = orm.getEmptyState(), action) {
     case ASSIGN_TASK : {
       let tasks = Project.withId(action.value.idProject).tasks
       tasks ? tasks.push(action.value.idTask) : Project.withId(action.value.idProject).tasks = [action.value.idTask]
+      //update the task ref
+      tasks = Project.withId(action.value.idProject).tasks
       if(tasks) {
         let sumDays = 0
         tasks.forEach((task) => {
           sumDays+= Task.withId(task).timeduration
         })
         let project = Project.withId(action.value.idProject)
-        Project.withId(action.value.idProject).endDate = project.startDate + sumDays + project.slackTime
+        Project.withId(action.value.idProject).endDate = project.startDate
+
+
+        Project.withId(action.value.idProject).endDate.setDate(Project.withId(action.value.idProject).endDate.getDate() +  sumDays + project.slackTime)
       }
       break
     }
