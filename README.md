@@ -14,7 +14,7 @@ As we all know, Redux is just an implementation of **Flux** design pattern, by u
 However, when using state management there are few and important things to consider :
 - We should avoid deep nesting - otherwhise our data will be very hard to deal with
 - A data normalization is highly recommanded!
-- By using Redux, we're going to use plain Object literal - we're killing modularization and putting everything into a global object
+- By using Redux, we're going to use plain Object literal - we're killing modularization and putting everything into a single tree object.
 - Thinking enterprise wide - our data can't scale very well.
 
 ## Attemp #3 Hybrid solution : state management + ES6 Classes ! 
