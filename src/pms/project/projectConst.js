@@ -1,0 +1,3 @@
+export const CREATE_PROJECT = 'CREATE_PROJECT'
+export const ASSIGN_TASK = 'ASSIGN_TASK'
+export const DELETE_PROJECT = 'DELETE_PROJECT'
